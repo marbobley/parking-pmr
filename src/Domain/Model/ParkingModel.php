@@ -11,7 +11,6 @@ final class ParkingModel
         private readonly string $id,
         private readonly float $latitude,
         private readonly float $longitude,
-        private readonly ?string $label = null,
     ) {
     }
 
@@ -28,10 +27,5 @@ final class ParkingModel
     public function getLongitude(): float
     {
         return $this->longitude;
-    }
-
-    public function getLabel(): ?string
-    {
-        return $this->label;
     }
 }
