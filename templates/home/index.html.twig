@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Parkings PMR - Carte{% endblock %}
-
 {% block body %}
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&libraries=maps,marker&v=weekly"
@@ -10,14 +8,12 @@
 
 <div class="container py-4">
     <h1 class="h3 mb-3">Carte de Montpellier avec tous les parkings PMR</h1>
-    <h2> parking count : {{ parkings|length }}</h2>
-    <div id="map" style="width: 100%; height: 400px; background: #e9ecef;" class="mb-3">
+    <div id="map" style="width: 100%; height: 500px; background: #e9ecef;" class="mb-3">
         <gmp-map
-            center="43.59732,3.9011931"
-            zoom="12"
-            map-id="DEMO_MAP_ID"
+            center="43.62505,3.862038"
+            zoom="13"
+            map-id="MAP_PMR"
             style="height: 500px">
-
             {% if parkings is defined and parkings|length > 0 %}
                     {% for parking in parkings %}
                         <gmp-advanced-marker gmp-clickable position="{{ parking.latitude }} ,{{ parking.longitude }}" title="string"></gmp-advanced-marker>
