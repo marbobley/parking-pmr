@@ -15,7 +15,6 @@ final class HomeController extends AbstractController
     {
         $parkings = $getAllParkings->findAll();
 
-        dd($parkings);
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'parkings' => $parkings,

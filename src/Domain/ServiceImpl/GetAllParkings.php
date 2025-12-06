@@ -11,7 +11,7 @@ use App\Domain\ServiceInterface\GetAllParkingsInterface;
  */
 final class GetAllParkings implements GetAllParkingsInterface
 {
-    public function __construct(private readonly ParkingProviderInterface $repository)
+    public function __construct(private readonly ParkingProviderInterface $provider)
     {
     }
 
@@ -19,7 +19,7 @@ final class GetAllParkings implements GetAllParkingsInterface
      * @return list<ParkingModel>
      */
     public function findAll() : array{
-        return $this->repository->findAll();
+        return $this->provider->findAll();
     }
 
 }
