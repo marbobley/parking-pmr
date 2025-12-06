@@ -13,26 +13,20 @@
 
 <div class="container py-4">
     <h1 class="h3 mb-3">{{ controller_name }}</h1>
-
+    <h2> parking count : {{ parkings|length }}</h2>
     <div id="map" style="width: 100%; height: 400px; background: #e9ecef;" class="mb-3">
         <gmp-map
             center="43.59732,3.9011931"
-            zoom="10"
+            zoom="12"
             map-id="DEMO_MAP_ID"
-            style="height: 500px"></gmp-map>
-    </div>
+            style="height: 500px">
 
-    <h2 class="h5">Parkings chargés</h2>
-    {% if parkings is defined and parkings|length > 0 %}
-        <ul>
-            {% for p in parkings %}
-                <li>
-                    {{ p.label ?? 'Parking' }} ({{ p.latitude }}, {{ p.longitude }})
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p class="text-muted">Aucun parking à afficher pour le moment. Configurez l'URL de l'API pour commencer.</p>
-    {% endif %}
+            {% if parkings is defined and parkings|length > 0 %}
+                    {% for parking in parkings %}
+                        <gmp-advanced-marker gmp-clickable position="{{ parking.latitude }} ,{{ parking.longitude }}" title="string"></gmp-advanced-marker>
+                    {% endfor %}
+            {% endif %}
+        </gmp-map>
+    </div>
 </div>
 {% endblock %}

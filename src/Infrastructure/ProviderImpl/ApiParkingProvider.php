@@ -20,7 +20,9 @@ final readonly class ApiParkingProvider implements ParkingProviderInterface
      */
     public function findAll(): array
     {
-        $results = $this->httpClient->findAll();
+        $result1000 = $this->httpClient->findAll();
+        $result2000 = $this->httpClient->findAll('1000');
+        $results = array_merge($result1000, $result2000);
         return array_map(fn($result) => $this->mapper->mapperEntityToModel($result), $results);
     }
 }

@@ -18,7 +18,7 @@ final readonly class ApiParkingRepository
     /**
      * @return list<Parking>
      */
-    public function findAll(): array
+    public function findAll(string $offset = '0', string $limit = '1000'): array
     {
         $array = null;
         if (!$this->apiUrl) {
@@ -27,7 +27,7 @@ final readonly class ApiParkingRepository
         }
 
         try {
-            $response = $this->httpClient->request('GET', $this->apiUrl);
+            $response = $this->httpClient->request('GET', $this->apiUrl . '?offset=' . $offset . '&limit=' . $limit);
             if (200 !== $response->getStatusCode()) {
                 $array = [];
             }
