@@ -7,6 +7,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    # URL de l'API REST fournissant les places de parking (peut être surchargée via env: PARKING_API_URL)
+    parking.api_url: '%env(default::PARKING_API_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -18,6 +20,13 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
+
+    # Bindings/alias pour l'architecture hexagonale
+    #App\Domain\ProviderInterface\ParkingRepositoryInterface: '@App\Infrastructure\HttpRestClient\ApiParkingRepository'
+
+    App\Infrastructure\HttpRestClient\ApiParkingRepository:
+        arguments:
+            $apiUrl: '%parking.api_url%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
