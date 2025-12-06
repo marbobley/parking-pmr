@@ -2,17 +2,9 @@
 
 namespace App\Infrastructure\Model;
 
-class Latitude
-{
-    public string $type;
-    public ?string $value;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
-    public function __construct(
-        string $type,
-        ?string $value
-    ) {
-        $this->type = $type;
-        $this->value = $value;
-    }
+class Latitude extends Coordinate
+{
 
 }

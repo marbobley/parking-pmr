@@ -3,16 +3,17 @@
 namespace App\Infrastructure\Model;
 
 
+use Symfony\Component\Serializer\Attribute\SerializedName;
+
 class Parking
 {
     public string $id;
     public string $type;
 
-    public function __construct(
-        string $id,
-        string $type,
-    ) {
-        $this->id = $id;
-        $this->type = $type;
-    }
+    #[SerializedName('Latitude')]
+    public Latitude $latitude;
+    #[SerializedName('Longitude')]
+    public Longitude $longitude;
+    #[SerializedName('slotStatus')]
+    public SlotStatus $slot;
 }
