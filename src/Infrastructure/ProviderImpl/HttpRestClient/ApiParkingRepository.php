@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Infrastructure\HttpRestClient;
+namespace App\Infrastructure\ProviderImpl\HttpRestClient;
 
 use App\Domain\Model\Parking;
 use App\Domain\ProviderInterface\ParkingRepositoryInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-/**
- * Adaptateur secondaire: récupère les parkings depuis une API REST externe.
- */
 final class ApiParkingRepository implements ParkingRepositoryInterface
 {
     public function __construct(
@@ -22,22 +19,23 @@ final class ApiParkingRepository implements ParkingRepositoryInterface
      */
     public function findAll(): array
     {
+        $array = null;
         if (!$this->apiUrl) {
             // Si aucune URL n'est configurée, retourner une liste vide pour rester résilient.
-            return [];
+           $array = [];
         }
 
         try {
             $response = $this->httpClient->request('GET', $this->apiUrl);
             if (200 !== $response->getStatusCode()) {
-                return [];
+                $array = [];
             }
-            $data = $response->toArray(false);
 
-            return $data;
+            $array = $response->toArray(false);
         } catch (\Throwable $e) {
             // En cas d'erreur réseau/JSON, retourner une liste vide pour ne pas casser l'app
-            return [];
+            $array = [];
         }
+        return $array;
     }
 }

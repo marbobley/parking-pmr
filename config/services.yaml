@@ -24,7 +24,7 @@ services:
     # Bindings/alias pour l'architecture hexagonale
     #App\Domain\ProviderInterface\ParkingRepositoryInterface: '@App\Infrastructure\HttpRestClient\ApiParkingRepository'
 
-    App\Infrastructure\HttpRestClient\ApiParkingRepository:
+    App\Infrastructure\ProviderImpl\HttpRestClient\ApiParkingRepository:
         arguments:
             $apiUrl: '%parking.api_url%'
 
