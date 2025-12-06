@@ -2,15 +2,15 @@
 
 namespace App\Domain\ProviderInterface;
 
-use App\Domain\Model\Parking;
+use App\Domain\Model\ParkingModel;
 
 /**
  * Port primaire (interface) pour accéder aux parkings.
  */
-interface ParkingRepositoryInterface
+interface ParkingProviderInterface
 {
     /**
-     * @return list<Parking>
+     * @return list<ParkingModel>
      */
     public function findAll(): array;
 }

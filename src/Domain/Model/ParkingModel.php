@@ -5,7 +5,7 @@ namespace App\Domain\Model;
 /**
  * Modèle de domaine (Value Object/Entity) représentant une place de parking.
  */
-final class Parking
+final class ParkingModel
 {
     public function __construct(
         private readonly string $id,

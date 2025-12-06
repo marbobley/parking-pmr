@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Infrastructure\ProviderImpl\HttpRestClient;
+namespace App\Infrastructure\Repository;
 
-use App\Domain\Model\Parking;
-use App\Domain\ProviderInterface\ParkingRepositoryInterface;
+use App\Domain\ProviderInterface\ParkingProviderInterface;
+use App\Infrastructure\Model\Parking;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final class ApiParkingRepository implements ParkingRepositoryInterface
+final class ApiParkingRepository
 {
     public function __construct(
         private readonly HttpClientInterface $httpClient,

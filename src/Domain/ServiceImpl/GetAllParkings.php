@@ -2,8 +2,8 @@
 
 namespace App\Domain\ServiceImpl;
 
-use App\Domain\Model\Parking;
-use App\Domain\ProviderInterface\ParkingRepositoryInterface;
+use App\Domain\Model\ParkingModel;
+use App\Domain\ProviderInterface\ParkingProviderInterface;
 use App\Domain\ServiceInterface\GetAllParkingsInterface;
 
 /**
@@ -11,12 +11,12 @@ use App\Domain\ServiceInterface\GetAllParkingsInterface;
  */
 final class GetAllParkings implements GetAllParkingsInterface
 {
-    public function __construct(private readonly ParkingRepositoryInterface $repository)
+    public function __construct(private readonly ParkingProviderInterface $repository)
     {
     }
 
     /**
-     * @return list<Parking>
+     * @return list<ParkingModel>
      */
     public function findAll() : array{
         return $this->repository->findAll();
