@@ -7,11 +7,11 @@ use App\Domain\ProviderInterface\ParkingProviderInterface;
 use App\Domain\ServiceInterface\GetAllParkingsInterface;
 
 /**
- * Cas d'usage: récupérer toutes les places de parking depuis le port.
+ * Cas d'usage : récupérer toutes les places de parking depuis le port.
  */
-final class GetAllParkings implements GetAllParkingsInterface
+final readonly class GetAllParkings implements GetAllParkingsInterface
 {
-    public function __construct(private readonly ParkingProviderInterface $provider)
+    public function __construct(private ParkingProviderInterface $provider)
     {
     }
 

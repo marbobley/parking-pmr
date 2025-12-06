@@ -6,12 +6,12 @@ use App\Infrastructure\Model\Parking;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final class ApiParkingRepository
+final readonly class ApiParkingRepository
 {
     public function __construct(
-        private readonly HttpClientInterface $httpClient,
-        private readonly SerializerInterface $serializer,
-        private readonly ?string $apiUrl = null,
+        private HttpClientInterface $httpClient,
+        private SerializerInterface $serializer,
+        private ?string             $apiUrl = null,
     ) {
     }
 
