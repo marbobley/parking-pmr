@@ -14,21 +14,19 @@ use Symfony\UX\Map\Point;
 readonly class UxMap implements UxMapInterface
 {
 
+
+    public function __construct(private SvgIcon $svgIcon){
+
+    }
+
+
     public function generate(array $parkings) : Map
     {
-        $map = (new Map('default'))
-            ->center(new Point(43.62505, 3.862038))
-            ->zoom(13)
-            ->options((new LeafletOptions())
-                ->tileLayer(new TileLayer(
-                    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                    options: ['maxZoom' => 19]
-                ))
-            );
-        $iconRed = Icon::svg('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 96 96"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#FF0000" stroke="#000" d="M48 88s32 -24 32 -50c0 -16.568 -14.326 -30 -32 -30S16 21.432 16 38c0 26 32 50 32 50Z" stroke-width="2"/><path stroke="#000000" stroke-linecap="round" d="M42 28v32" stroke-width="2"/><path fill="#FFFFFF" stroke="#000000" d="M42 28h12a8 8 0 0 1 0 16H42z" stroke-width="2"/></g></svg>');
-        $iconBlue = Icon::svg('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 96 96"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#0000FF" stroke="#000" d="M48 88s32 -24 32 -50c0 -16.568 -14.326 -30 -32 -30S16 21.432 16 38c0 26 32 50 32 50Z" stroke-width="2"/><path stroke="#fff" stroke-linecap="round" d="M42 28v32" stroke-width="2"/><path fill="#00FF00" stroke="#fff" d="M42 28h12a8 8 0 0 1 0 16H42z" stroke-width="2"/></g></svg>');
-        $iconGreen = Icon::svg('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 96 96"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#00FF00" stroke="#000" d="M48 88s32 -24 32 -50c0 -16.568 -14.326 -30 -32 -30S16 21.432 16 38c0 26 32 50 32 50Z" stroke-width="2"/><path stroke="#000000" stroke-linecap="round" d="M42 28v32" stroke-width="2"/><path fill="#FFFFFF" stroke="#000000" d="M42 28h12a8 8 0 0 1 0 16H42z" stroke-width="2"/></g></svg>');
+        $map = $this->initializeMap();
+
+        $iconRed = $this->svgIcon->getParkingIcon(SvgIcon::RED );
+        $iconGreen = $this->svgIcon->getParkingIcon(SvgIcon::GREEN);
+        $iconBlue = $this->svgIcon->getParkingIcon(SvgIcon::BLUE);
 
         foreach ($parkings as $parking) {
 
@@ -50,5 +48,24 @@ readonly class UxMap implements UxMapInterface
                 icon: $icon));
         }
         return $map;
+    }
+
+    /** Par défaut, crée une map centrée sur montpellier
+     * @param float $latitude
+     * @param float $longitude
+     * @return Map
+     */
+    public function initializeMap( float $latitude = 43.62505, float $longitude = 3.862038): Map
+    {
+        return (new Map('default'))
+            ->center(new Point($latitude, $longitude))
+            ->zoom(13)
+            ->options((new LeafletOptions())
+                ->tileLayer(new TileLayer(
+                    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    options: ['maxZoom' => 19]
+                ))
+            );
     }
 }
