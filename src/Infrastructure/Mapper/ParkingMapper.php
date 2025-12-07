@@ -5,6 +5,7 @@ namespace App\Infrastructure\Mapper;
 use App\Domain\Model\ParkingModel;
 use App\Infrastructure\Model\Parking;
 use App\Infrastructure\Model\Coordinate;
+use App\Infrastructure\Model\SlotStatus;
 
 class ParkingMapper
 {
@@ -17,13 +18,13 @@ class ParkingMapper
 
         $lat = $this->extractCoordinateFloat($object->latitude ?? null, 'latitude');
         $lon = $this->extractCoordinateFloat($object->longitude ?? null, 'longitude');
-
-        return new ParkingModel($id, $lat, $lon);
+        $parkingPlace = $this->extractNombrePlaceInteger($object->slot ?? null);
+        return new ParkingModel($id, $lat, $lon,$parkingPlace );
     }
 
     /**
      * Extrait une coordonnée (latitude/longitude) en float à partir de
-     * différentes formes de données: Coordinate, tableau, scalaire.
+     * différentes formes de données : Coordinate, tableau, scalaire.
      * Valide également l'intervalle.
      */
     private function extractCoordinateFloat(mixed $value, string $field): float
@@ -58,5 +59,13 @@ class ParkingMapper
         }
 
         return $float;
+    }
+
+    private function extractNombrePlaceInteger(SlotStatus|null $slot) : int
+    {
+        if($slot === null) {
+            return -1;
+        }
+        return (int)($slot->value ?? 0);
     }
 }

@@ -34,13 +34,13 @@ final class HomeController extends AbstractController
             );
 
         foreach ($parkings as $parking) {
-
+            
             $map->addMarker(new Marker(
                 position: new Point($parking->getLatitude(), $parking->getLongitude()),
                 title: 'Place PMR',
                 infoWindow: new InfoWindow(
                     headerContent: '<b>Place PMR</b>',
-                    content: 'latitude: ' . $parking->getLatitude() . ' longitude: ' . $parking->getLongitude()
+                    content: 'latitude: ' . $parking->getLatitude() . ' longitude: ' . $parking->getLongitude() . $parking->getNombrePlaceDisponible()
                 )));
         }
 
