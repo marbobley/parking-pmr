@@ -9,6 +9,7 @@
 parameters:
     # URL de l'API REST fournissant les places de parking (peut être surchargée via env: PARKING_API_URL)
     parking.api_url: '%env(default::PARKING_API_URL)%'
+    geo_platform.api_url: '%env(default::GEO_PLATFORM_API_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -27,6 +28,10 @@ services:
     App\Infrastructure\Repository\ApiParkingRepository:
         arguments:
             $apiUrl: '%parking.api_url%'
+
+    App\Infrastructure\Repository\ApiGeoPlatformRepository:
+        arguments:
+            $apiUrl: '%geo_platform.api_url%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
