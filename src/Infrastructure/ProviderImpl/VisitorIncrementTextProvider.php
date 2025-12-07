@@ -2,11 +2,7 @@
 
 namespace App\Infrastructure\ProviderImpl;
 
-use App\Domain\Model\ParkingModel;
-use App\Domain\ProviderInterface\ParkingProviderInterface;
 use App\Domain\ProviderInterface\VisitorIncrementProviderInterface;
-use App\Infrastructure\Mapper\ParkingMapper;
-use App\Infrastructure\Repository\ApiParkingRepository;
 
 final readonly class VisitorIncrementTextProvider implements VisitorIncrementProviderInterface
 {

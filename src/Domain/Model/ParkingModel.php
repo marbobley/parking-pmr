@@ -11,6 +11,7 @@ final readonly class ParkingModel
         private string $id,
         private float  $latitude,
         private float  $longitude,
+        private int $nombrePlaceDisponible
     ) {
     }
 
@@ -27,5 +28,10 @@ final readonly class ParkingModel
     public function getLongitude(): float
     {
         return $this->longitude;
+    }
+
+    public function getNombrePlaceDisponible(): int
+    {
+        return $this->nombrePlaceDisponible;
     }
 }
