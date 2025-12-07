@@ -24,6 +24,7 @@ services:
 
     # Bindings/alias pour l'architecture hexagonale
     #App\Domain\ProviderInterface\ParkingRepositoryInterface: '@App\Infrastructure\HttpRestClient\ApiParkingRepository'
+    App\Domain\ProviderInterface\VisitorIncrementProviderInterface: '@App\Infrastructure\ProviderImpl\VisitorIncrementTextProvider'
 
     App\Infrastructure\Repository\ApiParkingRepository:
         arguments:

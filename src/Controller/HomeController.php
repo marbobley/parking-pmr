@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Domain\ServiceImpl\GetAllParkings;
 use App\Domain\ServiceInterface\GetAllParkingsInterface;
+use App\Domain\ServiceInterface\VisitorIncrementInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,8 +17,10 @@ use Symfony\UX\Map\Point;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET'])]
-    public function index(GetAllParkingsInterface $getAllParkings): Response
+    public function index( GetAllParkingsInterface $getAllParkings, VisitorIncrementInterface $visitorCounter): Response
     {
+        // Incrémente le compteur de visiteurs à chaque affichage de la page d'accueil
+        $visitorCounter->increment();
         $parkings = $getAllParkings->findAll();
         $map = (new Map('default'))
             ->center(new Point(43.62505, 3.862038))
@@ -33,7 +35,6 @@ final class HomeController extends AbstractController
 
         foreach ($parkings as $parking) {
 
-            $url = $this->generateUrl('app_plus_info_index', ['latitude' => $parking->getLatitude(), 'longitude' => $parking->getLongitude()]);
             $map->addMarker(new Marker(
                 position: new Point($parking->getLatitude(), $parking->getLongitude()),
                 title: 'Place PMR',
