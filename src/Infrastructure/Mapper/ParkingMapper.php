@@ -63,9 +63,9 @@ class ParkingMapper
 
     private function extractNombrePlaceInteger(SlotStatus|null $slot) : int
     {
-        if($slot === null) {
+        if($slot === null || $slot->value === null) {
             return -1;
         }
-        return (int)($slot->value ?? 0);
+        return (int)($slot->value);
     }
 }
