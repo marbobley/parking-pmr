@@ -39,7 +39,7 @@ final class HomeController extends AbstractController
                 title: 'Place PMR',
                 infoWindow: new InfoWindow(
                     headerContent: '<b>Place PMR</b>',
-                    content: 'latitude: ' . $parking->getLatitude() . ' longitude: ' . $parking->getLongitude() . '<p><a href="'.$url.'">Plus d\'info</a></p>'
+                    content: 'latitude: ' . $parking->getLatitude() . ' longitude: ' . $parking->getLongitude()
                 )));
         }
 
