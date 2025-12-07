@@ -16,6 +16,8 @@ final readonly class ApiGeoPlatformRepository
     }
 
     /**
+     * @param float $latitude
+     * @param float $longitude
      * @return GeoPlatformAdress
      */
     public function findOne(float $latitude, float $longitude ): GeoPlatformAdress
@@ -38,7 +40,6 @@ final readonly class ApiGeoPlatformRepository
             // En cas d'erreur réseau/JSON, retourner une liste vide pour ne pas casser l'app
             $array = [];
         }
-        dd($array);
         return $array;
     }
 }

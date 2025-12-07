@@ -8,7 +8,11 @@ class GeoPlatformMapper
 {
     public function mapperEntityToModel(GeoPlatformAdress $object): AdresseProcheModel
     {
-        return new AdresseProcheModel($object->type);
+        if(!isset($object->features[0]->properties->label)) {
+            return new AdresseProcheModel('Adresse non trouvée');
+        }
+
+        return new AdresseProcheModel($object->features[0]->properties->label);
     }
 
 }

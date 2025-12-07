@@ -5,13 +5,14 @@ namespace App\Domain\Model;
 readonly class AdresseProcheModel
 {
     public function __construct(
-        private string $type
+        private string $label
     ) {
     }
 
-    public function getType(): string
+    public function getLabel(): string
     {
-        return $this->type;
+        return $this->label;
     }
+
 
 }

@@ -18,7 +18,9 @@ class PlusInfoController extends AbstractController
                           #[MapQueryParameter] float $latitude,
     ): Response
     {
-        $adresseProcheService->findOne($longitude, $latitude);
-        return $this->render('plus_info/index.html.twig');
+        $adresseProche = $adresseProcheService->findOne($longitude, $latitude);
+        return $this->render('plus_info/index.html.twig' , [
+            'adresseProche' => $adresseProche,
+        ]);
     }
 }

@@ -10,7 +10,7 @@ class GeoPlatformAdress
 {
     #[SerializedName('features')]
     /**
-     * @return GeoPlatformFeatures[]
+     * @var GeoPlatformFeatures[]
      */
     public array $features = [];
 }
