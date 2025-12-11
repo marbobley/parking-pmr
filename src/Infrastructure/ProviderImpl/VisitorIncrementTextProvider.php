@@ -11,7 +11,7 @@ final readonly class VisitorIncrementTextProvider implements VisitorIncrementPro
     public function __construct(string $filePath = null)
     {
         // Stockage par défaut dans var/share/visits_count.txt
-        $projectDir = dirname(__DIR__, 2); // src -> project root
+        $projectDir = dirname(__DIR__, 3);
         $defaultPath = $projectDir . '/var/share/visits_count.txt';
         $this->filePath = $filePath ?? $defaultPath;
     }
@@ -26,26 +26,26 @@ final readonly class VisitorIncrementTextProvider implements VisitorIncrementPro
         $fp = fopen($this->filePath, 'c+');
         if ($fp === false) {
             // En cas d'échec d'ouverture, retourner 0 (pas d'exception pour rester non bloquant)
-            return ;
+            return;
         }
 
         try {
             // Verrou exclusif
             if (!flock($fp, LOCK_EX)) {
-                return ;
+                return;
             }
 
             // Se placer au début
             rewind($fp);
             $contents = stream_get_contents($fp) ?: '';
-            $current = is_numeric(trim($contents)) ? (int) trim($contents) : 0;
+            $current = is_numeric(trim($contents)) ? (int)trim($contents) : 0;
 
             $current++;
 
             // Écrire la nouvelle valeur
             ftruncate($fp, 0);
             rewind($fp);
-            fwrite($fp, (string) $current);
+            fwrite($fp, (string)$current);
             fflush($fp);
 
             // Libérer le verrou
@@ -54,6 +54,14 @@ final readonly class VisitorIncrementTextProvider implements VisitorIncrementPro
             return;
         } finally {
             fclose($fp);
+        }
+    }
+
+    private function ensureDirectory(): void
+    {
+        $dir = dirname($this->filePath);
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0775, true);
         }
     }
 
@@ -66,14 +74,6 @@ final readonly class VisitorIncrementTextProvider implements VisitorIncrementPro
             return 0;
         }
         $data = @file_get_contents($this->filePath);
-        return is_numeric(trim((string) $data)) ? (int) trim((string) $data) : 0;
-    }
-
-    private function ensureDirectory(): void
-    {
-        $dir = dirname($this->filePath);
-        if (!is_dir($dir)) {
-            @mkdir($dir, 0775, true);
-        }
+        return is_numeric(trim((string)$data)) ? (int)trim((string)$data) : 0;
     }
 }

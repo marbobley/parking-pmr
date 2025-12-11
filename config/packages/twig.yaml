@@ -1,5 +1,8 @@
 twig:
     file_name_pattern: '*.twig'
+    globals:
+        # the value is the service's id
+        svgIconService: '@App\Domain\ServiceImpl\SvgIcon'
 
 when@test:
     twig:
