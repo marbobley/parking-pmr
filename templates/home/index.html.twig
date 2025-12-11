@@ -1,32 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container py-4">
-    <h1 class="h3 mb-3">Carte de Montpellier avec toutes les places de parking PMR</h1>
-    <div class="mb-3" aria-label="Légende des marqueurs">
-        <ul class="list-unstyled d-flex flex-wrap gap-3 mb-0 align-items-center">
-            <li class="d-flex align-items-center gap-2">
-                <span aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 96 96"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#0000FF" stroke="#000" d="M48 88s32 -24 32 -50c0 -16.568 -14.326 -30 -32 -30S16 21.432 16 38c0 26 32 50 32 50Z" stroke-width="2"/><path stroke="#fff" stroke-linecap="round" d="M42 28v32" stroke-width="2"/><path fill="#00FF00" stroke="#fff" d="M42 28h12a8 8 0 0 1 0 16H42z" stroke-width="2"/></g></svg>
-                </span>
-                <span>Bleu : information indisponible</span>
-            </li>
-            <li class="d-flex align-items-center gap-2">
-                <span aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 96 96"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#FF0000" stroke="#000" d="M48 88s32 -24 32 -50c0 -16.568 -14.326 -30 -32 -30S16 21.432 16 38c0 26 32 50 32 50Z" stroke-width="2"/><path stroke="#000000" stroke-linecap="round" d="M42 28v32" stroke-width="2"/><path fill="#FFFFFF" stroke="#000000" d="M42 28h12a8 8 0 0 1 0 16H42z" stroke-width="2"/></g></svg>
-                </span>
-                <span>Rouge : complet (0 place)</span>
-            </li>
-            <li class="d-flex align-items-center gap-2">
-                <span aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 96 96"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#00FF00" stroke="#000" d="M48 88s32 -24 32 -50c0 -16.568 -14.326 -30 -32 -30S16 21.432 16 38c0 26 32 50 32 50Z" stroke-width="2"/><path stroke="#000000" stroke-linecap="round" d="M42 28v32" stroke-width="2"/><path fill="#FFFFFF" stroke="#000000" d="M42 28h12a8 8 0 0 1 0 16H42z" stroke-width="2"/></g></svg>
-                </span>
-                <span>Vert : places disponibles</span>
-            </li>
-        </ul>
+    <div class="container py-4">
+        <h1 class="h3 mb-3">Carte de Montpellier avec toutes les places de parking PMR</h1>
+        <div class="mb-3" aria-label="Légende des marqueurs">
+            <ul class="list-unstyled d-flex flex-wrap gap-3 mb-0 align-items-center">
+                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG }}" color="{{ svgIconService.BLUE }}"
+                                       message="Bleu : information indisponible"/>
+                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG }}" color="{{ svgIconService.RED }}"
+                                       message="Rouge : complet (0 place)"/>
+                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG }}" color="{{ svgIconService.GREEN }}"
+                                       message="Vert : places disponibles"/>
+            </ul>
+        </div>
+        <div>
+            {{ ux_map(map, {style: 'height: 600px;'}) }}
+        </div>
     </div>
-    <div>
-        {{ ux_map(map, {style: 'height: 600px;'}) }}
-    </div>
-</div>
 {% endblock %}
