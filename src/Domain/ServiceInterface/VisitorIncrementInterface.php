@@ -4,6 +4,7 @@ namespace App\Domain\ServiceInterface;
 
 interface VisitorIncrementInterface
 {
-    function increment() : void;
-    function getCount() : int;
+    function getCount(): int;
+
+    public function addConnexion(?string $clientIP, ?string $browser, \DateTimeImmutable $date);
 }
