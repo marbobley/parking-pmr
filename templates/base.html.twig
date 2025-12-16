@@ -18,6 +18,27 @@
     {% endblock %}
 </head>
 <body>
-{% block body %}{% endblock %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('app_home') }}">{{ titleSite }}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% set currentRoute = app.request.attributes.get('_route') %}
+                <li class="nav-item">
+                    <a class="nav-link {{ currentRoute == 'app_home' ? 'active' : '' }}" aria-current="page"
+                       href="{{ path('app_home') }}">Accueil</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container my-4">
+    {% block body %}{% endblock %}
+</main>
 </body>
 </html>
