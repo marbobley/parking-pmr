@@ -11,7 +11,8 @@ final readonly class ParkingModel
         private string $id,
         private float  $latitude,
         private float  $longitude,
-        private int    $nombrePlaceDisponible
+        private int    $nombrePlaceDisponible,
+        private string $adresse
     )
     {
     }
@@ -39,5 +40,10 @@ final readonly class ParkingModel
     public function getCoordinate(): CoordinateModel
     {
         return new CoordinateModel($this->latitude, $this->longitude);
+    }
+
+    public function getAdresse(): string
+    {
+        return $this->adresse;
     }
 }

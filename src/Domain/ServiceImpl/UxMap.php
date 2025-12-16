@@ -5,7 +5,6 @@ namespace App\Domain\ServiceImpl;
 use App\Domain\ServiceInterface\UxMapInterface;
 use Symfony\UX\Map\Bridge\Leaflet\LeafletOptions;
 use Symfony\UX\Map\Bridge\Leaflet\Option\TileLayer;
-use Symfony\UX\Map\Icon\Icon;
 use Symfony\UX\Map\InfoWindow;
 use Symfony\UX\Map\Map;
 use Symfony\UX\Map\Marker;
@@ -15,26 +14,27 @@ readonly class UxMap implements UxMapInterface
 {
 
 
-    public function __construct(private SvgIcon $svgIcon){
+    public function __construct(private SvgIcon $svgIcon)
+    {
 
     }
 
 
-    public function generate(array $parkings) : Map
+    public function generate(array $parkings): Map
     {
         $map = $this->initializeMap();
 
-        $iconRed = $this->svgIcon->getParkingIcon(SvgIcon::RED );
+        $iconRed = $this->svgIcon->getParkingIcon(SvgIcon::RED);
         $iconGreen = $this->svgIcon->getParkingIcon(SvgIcon::GREEN);
         $iconBlue = $this->svgIcon->getParkingIcon(SvgIcon::BLUE);
 
         foreach ($parkings as $parking) {
 
-            if($parking->getNombrePlaceDisponible() === -1) {
+            if ($parking->getNombrePlaceDisponible() === -1) {
                 $icon = $iconBlue;
-            }elseif($parking->getNombrePlaceDisponible() === 0) {
+            } elseif ($parking->getNombrePlaceDisponible() === 0) {
                 $icon = $iconRed;
-            }else {
+            } else {
                 $icon = $iconGreen;
             }
 
@@ -43,7 +43,7 @@ readonly class UxMap implements UxMapInterface
                 title: 'Place PMR',
                 infoWindow: new InfoWindow(
                     headerContent: '<b>Place PMR</b>',
-                    content: 'latitude: ' . $parking->getLatitude() . ' longitude: ' . $parking->getLongitude() . $parking->getNombrePlaceDisponible()
+                    content: 'adresse : ' . $parking->getAdresse()
                 ),
                 icon: $icon));
         }
@@ -55,7 +55,7 @@ readonly class UxMap implements UxMapInterface
      * @param float $longitude
      * @return Map
      */
-    public function initializeMap( float $latitude = 43.62505, float $longitude = 3.862038): Map
+    public function initializeMap(float $latitude = 43.62505, float $longitude = 3.862038): Map
     {
         return (new Map('default'))
             ->center(new Point($latitude, $longitude))
