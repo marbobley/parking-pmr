@@ -3,6 +3,7 @@
 namespace App\Domain\ServiceImpl;
 
 use App\Domain\ServiceInterface\UxMapInterface;
+use App\Domain\Util\SvgIcon;
 use Symfony\UX\Map\Bridge\Leaflet\LeafletOptions;
 use Symfony\UX\Map\Bridge\Leaflet\Option\TileLayer;
 use Symfony\UX\Map\InfoWindow;

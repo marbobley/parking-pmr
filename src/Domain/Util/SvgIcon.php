@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\ServiceImpl;
+namespace App\Domain\Util;
 
 use Symfony\UX\Map\Icon\Icon;
 
