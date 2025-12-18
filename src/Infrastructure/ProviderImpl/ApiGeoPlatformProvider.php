@@ -21,7 +21,6 @@ final readonly class ApiGeoPlatformProvider implements AdresseProcheProviderInte
     /**
      * @param CoordinateModel[] $coordinates
      * @return AdresseProcheModel[]
-     * @throws GenericException
      */
     public function findAll(array $coordinates): array
     {
@@ -39,15 +38,4 @@ final readonly class ApiGeoPlatformProvider implements AdresseProcheProviderInte
         return $result;
     }
 
-    /**
-     * @param float $longitude
-     * @param float $latitude
-     * @return AdresseProcheModel
-     * @throws GenericException
-     */
-    public function findOne(float $longitude, float $latitude): AdresseProcheModel
-    {
-        $adresseProche = $this->httpClient->findOne($latitude, $longitude);
-        return $this->mapper->mapperEntityToModel($adresseProche);
-    }
 }

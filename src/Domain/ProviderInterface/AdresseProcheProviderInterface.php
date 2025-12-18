@@ -10,12 +10,6 @@ use App\Domain\Model\CoordinateModel;
  */
 interface AdresseProcheProviderInterface
 {
-    /**
-     * @param float $longitude
-     * @param float $latitude
-     * @return AdresseProcheModel
-     */
-    public function findOne(float $longitude, float $latitude): AdresseProcheModel;
 
     /**
      * @param list<CoordinateModel> $coordinates

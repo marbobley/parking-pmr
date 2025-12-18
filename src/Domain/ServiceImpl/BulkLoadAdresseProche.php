@@ -31,6 +31,7 @@ readonly class BulkLoadAdresseProche implements BulkLoadAdresseProcheInterface
         return count($adresseProche);
     }
 
+
     public function findAll(array $coordinates): array
     {
         return $this->provider->findAll($coordinates);
