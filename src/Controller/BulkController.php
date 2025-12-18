@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Domain\ProviderInterface\AdresseProcheOriginProviderInterface;
 use App\Domain\ServiceInterface\BulkLoadAdresseProcheInterface;
-use App\Domain\ServiceInterface\GetAllParkingsInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,24 +13,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class BulkController extends AbstractController
 {
     #[Route('/bulk/load', name: 'app_bulk_load', methods: ['GET'])]
-    public function bulkLoad(BulkLoadAdresseProcheInterface       $bulkLoader,
-                             GetAllParkingsInterface              $getAllParkings,
-                             AdresseProcheOriginProviderInterface $originProvider
+    public function bulkLoad(BulkLoadAdresseProcheInterface $bulkLoader
 
     ): Response
     {
-        $parkings = $getAllParkings->findAll();
-
-        $coordinates = array();
-        foreach ($parkings as $parking) {
-            $coordinates[] = $parking->getCoordinate();
-        }
-
-        $adresseProche = $bulkLoader->findAll($coordinates);
-        $originProvider->saveAll($adresseProche);
+        $quantityAdresseProche = $bulkLoader->loadAndSave();
 
         return $this->render('bulk/bulk_load.html.twig', [
-            'adresseProche' => $adresseProche,
+            'quantityAdresseProche' => $quantityAdresseProche,
         ]);
     }
 

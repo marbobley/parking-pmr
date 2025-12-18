@@ -13,4 +13,10 @@ interface BulkLoadAdresseProcheInterface
      * @return list<AdresseProcheModel>
      */
     public function findAll(array $coordinates): array;
+
+    /**
+     * Load address from an external source and save them in a database
+     * @return int quantity of saved address
+     */
+    public function loadAndSave(): int;
 }
