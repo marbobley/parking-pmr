@@ -2,44 +2,56 @@
 
 namespace App\Infrastructure\Repository;
 
+use App\Domain\Exception\GenericException;
 use App\Infrastructure\Model\GeoPlatformAdress;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Throwable;
 
 final readonly class ApiGeoPlatformRepository
 {
+    const ERROR_MESSAGE_API_GEOPLATEFORM_ADRESS_NOT_CONFIGURED = "L'url de l'API GeoPlateform n'est pas configurée";
+    const ERROR_MESSAGE_API_GEOPLATEFORM_NOT_OK = "Le retour de l'API GeoPlateform n'est pas ok";
+    const ERROR_MESSAGE_API_GEOPLATEFORM_THROW_EX = "Une exception a été levée : %s";
+
     public function __construct(
         private HttpClientInterface $httpClient,
         private SerializerInterface $serializer,
-        private ?string             $apiUrl = null,
-    ) {
+        private LoggerInterface     $logger,
+        private ?string             $apiUrl = null
+    )
+    {
     }
 
     /**
      * @param float $latitude
      * @param float $longitude
-     * @return GeoPlatformAdress
+     * @return GeoPlatformAdress|null
+     * @throws GenericException
      */
-    public function findOne(float $latitude, float $longitude ): GeoPlatformAdress
+    public function findOne(float $latitude, float $longitude): ?GeoPlatformAdress
     {
-        $array = null;
         if (!$this->apiUrl) {
-            // Si aucune URL n'est configurée, retourner une liste vide pour rester résilient.
-           $array = [];
+            $this->logger->error(self::ERROR_MESSAGE_API_GEOPLATEFORM_ADRESS_NOT_CONFIGURED);
+            throw new GenericException(self::ERROR_MESSAGE_API_GEOPLATEFORM_ADRESS_NOT_CONFIGURED);
         }
 
         try {
             $response = $this->httpClient->request('GET', $this->apiUrl . '?limit=1&lat=' . $latitude . '&lon=' . $longitude);
             if (200 !== $response->getStatusCode()) {
-                $array = [];
+                $this->logger->error(self::ERROR_MESSAGE_API_GEOPLATEFORM_NOT_OK);
+                throw new GenericException(self::ERROR_MESSAGE_API_GEOPLATEFORM_NOT_OK);
             }
             $jsonData = $response->getContent();
-            $array = $this->serializer->deserialize($jsonData, GeoPlatformAdress::class, 'json');
+            $geoPlatformAdress = $this->serializer->deserialize($jsonData, GeoPlatformAdress::class, 'json');
 
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
+            $message = sprintf(self::ERROR_MESSAGE_API_GEOPLATEFORM_THROW_EX, $e->getMessage());
             // En cas d'erreur réseau/JSON, retourner une liste vide pour ne pas casser l'app
-            $array = [];
+            $this->logger->error($message);
+            throw new GenericException($message);
         }
-        return $array;
+        return $geoPlatformAdress;
     }
 }

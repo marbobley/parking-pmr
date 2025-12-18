@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\ProviderImpl;
 
+use App\Domain\Exception\GenericException;
 use App\Domain\Model\AdresseProcheModel;
 use App\Domain\Model\CoordinateModel;
 use App\Domain\ProviderInterface\AdresseProcheProviderInterface;
@@ -20,14 +21,19 @@ final readonly class ApiGeoPlatformProvider implements AdresseProcheProviderInte
     /**
      * @param CoordinateModel[] $coordinates
      * @return AdresseProcheModel[]
+     * @throws GenericException
      */
     public function findAll(array $coordinates): array
     {
         $result = array();
         foreach ($coordinates as $coordinate) {
-            $adresseProche = $this->httpClient->findOne($coordinate->getLatitude(), $coordinate->getLongitude());
-            $result[] = $this->mapper->mapperEntityToModelWithOrigin($adresseProche, $coordinate);
-            sleep(1);
+            try {
+                $adresseProche = $this->httpClient->findOne($coordinate->getLatitude(), $coordinate->getLongitude());
+                $result[] = $this->mapper->mapperEntityToModelWithOrigin($adresseProche, $coordinate);
+                sleep(1);
+            } catch (GenericException) {
+                continue;
+            }
         }
 
         return $result;
@@ -37,6 +43,7 @@ final readonly class ApiGeoPlatformProvider implements AdresseProcheProviderInte
      * @param float $longitude
      * @param float $latitude
      * @return AdresseProcheModel
+     * @throws GenericException
      */
     public function findOne(float $longitude, float $latitude): AdresseProcheModel
     {
