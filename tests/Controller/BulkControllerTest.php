@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use App\Domain\ProviderInterface\AdresseProcheOriginProviderInterface;
 use App\Domain\ServiceInterface\BulkLoadAdresseProcheInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -33,44 +34,22 @@ final class BulkControllerTest extends WebTestCase
         self::assertStringContainsString('Load : 2', $content);
     }
 
-    /*
-    public function testBulkShow(): void
+    public function testBulkDelete(): void
     {
         $client = BulkControllerTest::createClient();
         $container = BulkControllerTest::getContainer();
 
         $originProvider = $this->createMock(AdresseProcheOriginProviderInterface::class);
-        $originProvider->method('findAll')->willReturn([
-            new AdresseProcheModel('Alpha', new CoordinateModel(43.6, 3.8)),
-            new AdresseProcheModel('Beta', new CoordinateModel(43.7, 3.9)),
-        ]);
+        $originProvider->expects(self::once())
+            ->method('deleteAll');
 
         $container->set(AdresseProcheOriginProviderInterface::class, $originProvider);
 
-        $client->request('GET', '/bulk/show');
+        $client->request('GET', '/bulk/delete');
 
         self::assertResponseIsSuccessful();
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
-        self::assertStringContainsString('Alpha', $content);
-        self::assertStringContainsString('Beta', $content);
+        self::assertStringContainsString('DELETE', $content);
     }
-        public function testBulkDelete(): void
-        {
-            $client = static::createClient();
-            $container = static::getContainer();
-
-            $originProvider = $this->createMock(AdresseProcheOriginProviderInterface::class);
-            $originProvider->expects(self::once())
-                ->method('deleteAll');
-
-            $container->set(AdresseProcheOriginProviderInterface::class, $originProvider);
-
-            $client->request('GET', '/bulk/delete');
-
-            self::assertResponseIsSuccessful();
-            $content = $client->getResponse()->getContent();
-            self::assertIsString($content);
-            self::assertStringContainsString('DELETE', $content);
-        }*/
 }
