@@ -56,7 +56,7 @@ readonly class UxMap implements UxMapInterface
      * @param float $longitude
      * @return Map
      */
-    public function initializeMap(float $latitude = 43.62505, float $longitude = 3.862038): Map
+    private function initializeMap(float $latitude = 43.62505, float $longitude = 3.862038): Map
     {
         return (new Map('default'))
             ->center(new Point($latitude, $longitude))
