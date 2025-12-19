@@ -2,7 +2,9 @@
 
 namespace App\Domain\Exception;
 
-class GenericException extends \Exception
+use Exception;
+
+class GenericException extends Exception
 {
 
 }

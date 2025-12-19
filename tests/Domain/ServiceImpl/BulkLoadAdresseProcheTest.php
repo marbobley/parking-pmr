@@ -114,22 +114,11 @@ final class BulkLoadAdresseProcheTest extends TestCase
             ->method('findAll')
             ->willReturn([]);
 
-        $provider->expects(self::once())
-            ->method('findAll')
-            ->with(self::callback(function (array $arg) {
-                self::assertIsArray($arg);
-                self::assertCount(0, $arg);
-                return true;
-            }))
-            ->willReturn([]);
+        $provider->expects(self::exactly(0))
+            ->method('findAll');
 
-        $originProvider->expects(self::once())
-            ->method('saveAll')
-            ->with(self::callback(function (array $arg) {
-                self::assertIsArray($arg);
-                self::assertCount(0, $arg);
-                return true;
-            }));
+        $originProvider->expects(self::exactly(0))
+            ->method('saveAll');
 
         $count = $service->loadAndSave();
 

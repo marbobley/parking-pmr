@@ -8,6 +8,7 @@ use App\Domain\ServiceInterface\VisitorIncrementInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
@@ -22,10 +23,30 @@ final class HomeController extends AbstractController
         $clientIP = $request->getClientIp();
         $browser = $request->headers->get('User-Agent');
         // Incrémente le compteur de visiteurs à chaque affichage de la page d'accueil
-        $visitorCounter->addConnexion($clientIP, $browser, new \DateTimeImmutable());
+        $visitorCounter->saveVisitorConnexion($clientIP, $browser, new \DateTimeImmutable());
         $parkings = $getAllParkings->findAll();
 
         $mapUx = $uxMap->generate($parkings);
+
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'HomeController',
+            'map' => $mapUx,
+            'parkings' => $parkings,
+        ]);
+    }
+
+
+    #[Route('/localisation', name: 'app_home_localisation', methods: ['GET'])]
+    public function localisation(Request                    $request,
+                                 GetAllParkingsInterface    $getAllParkings,
+                                 UxMapInterface             $uxMap,
+                                 #[MapQueryParameter] float $latitude,
+                                 #[MapQueryParameter] float $longitude
+    ): Response
+    {
+
+        $parkings = $getAllParkings->findAll();
+        $mapUx = $uxMap->generateWithLocalisation($parkings, $latitude, $longitude);
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

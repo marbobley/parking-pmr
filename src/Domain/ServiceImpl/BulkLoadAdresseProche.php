@@ -20,6 +20,10 @@ readonly class BulkLoadAdresseProche implements BulkLoadAdresseProcheInterface
     {
         $parkings = $this->getAllParkings->findAll();
 
+        if (empty($parkings)) {
+            return 0;
+        }
+
         $coordinates = array();
         foreach ($parkings as $parking) {
             $coordinates[] = $parking->getCoordinate();

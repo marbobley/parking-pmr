@@ -56,7 +56,7 @@ readonly class UxMap implements UxMapInterface
      * @param float $longitude
      * @return Map
      */
-    public function initializeMap(float $latitude = 43.62505, float $longitude = 3.862038): Map
+    private function initializeMap(float $latitude = 43.62505, float $longitude = 3.862038): Map
     {
         return (new Map('default'))
             ->center(new Point($latitude, $longitude))
@@ -68,5 +68,45 @@ readonly class UxMap implements UxMapInterface
                     options: ['maxZoom' => 19]
                 ))
             );
+    }
+
+    public function generateWithLocalisation(array $parkings, float $latitude, float $longitude): Map
+    {
+        $map = $this->initializeMap($latitude, $longitude);
+
+        $iconUser = $this->svgIcon->getParkingIcon(SvgIcon::RED);
+        $map->addMarker(new Marker(
+            position: new Point($latitude, $longitude),
+            title: 'Vous',
+            infoWindow: new InfoWindow(
+                headerContent: '<b>Vous</b>',
+                content: 'Je suis ici'
+            ),
+            icon: $iconUser));
+
+        $iconRed = $this->svgIcon->getParkingIcon(SvgIcon::RED);
+        $iconGreen = $this->svgIcon->getParkingIcon(SvgIcon::GREEN);
+        $iconBlue = $this->svgIcon->getParkingIcon(SvgIcon::BLUE);
+
+        foreach ($parkings as $parking) {
+
+            if ($parking->getNombrePlaceDisponible() === -1) {
+                $icon = $iconBlue;
+            } elseif ($parking->getNombrePlaceDisponible() === 0) {
+                $icon = $iconRed;
+            } else {
+                $icon = $iconGreen;
+            }
+
+            $map->addMarker(new Marker(
+                position: new Point($parking->getLatitude(), $parking->getLongitude()),
+                title: 'Place PMR',
+                infoWindow: new InfoWindow(
+                    headerContent: '<b>Place PMR</b>',
+                    content: 'adresse : ' . $parking->getAdresse()
+                ),
+                icon: $icon));
+        }
+        return $map;
     }
 }

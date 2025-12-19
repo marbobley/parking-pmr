@@ -21,5 +21,9 @@ interface AdresseProcheOriginProviderInterface
      */
     public function findAll(): array;
 
+    /**
+     * Delete all adresses proches
+     * @return void
+     */
     public function deleteAll(): void;
 }
