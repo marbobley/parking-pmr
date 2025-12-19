@@ -22,11 +22,11 @@ class GeoPlatformMapper
 
     public function mapperEntityToModelWithOrigin(GeoPlatformAdress $object, CoordinateModel $coordinateModel): AdresseProcheModel
     {
-        if (!isset($object->features[0]->properties->label)) {
+        if (!isset($object->features[0]["properties"]["label"])) {
             return new AdresseProcheModel(self::ADRESSE_NON_TROUVEE, new CoordinateModel(self::DEFAULT_COORDONNEE, self::DEFAULT_COORDONNEE));
         }
 
-        return new AdresseProcheModel($object->features[0]->properties->label, $coordinateModel);
+        return new AdresseProcheModel($object->features[0]["properties"]["label"], $coordinateModel);
     }
 
 }
