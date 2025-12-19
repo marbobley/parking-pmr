@@ -2,14 +2,14 @@
 
 {% block body %}
     <div class="container py-4">
-        <h1 class="h3 mb-3">Carte de Montpellier avec toutes les places de parking PMR</h1>
         <div class="mb-3" aria-label="Légende des marqueurs">
             <ul class="list-unstyled d-flex flex-wrap gap-3 mb-0 align-items-center">
-                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG }}" color="{{ svgIconService.BLUE }}"
+                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG_PARKING_ICON }}" color="{{ svgIconService.BLUE }}"
                                        message="Bleu : information indisponible"/>
-                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG }}" color="{{ svgIconService.RED }}"
+                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG_PARKING_ICON }}" color="{{ svgIconService.RED }}"
                                        message="Rouge : complet (0 place)"/>
-                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG }}" color="{{ svgIconService.GREEN }}"
+                <twig:SvgIconComponent svgIcon="{{ svgIconService.SVG_PARKING_ICON }}"
+                                       color="{{ svgIconService.GREEN }}"
                                        message="Vert : places disponibles"/>
             </ul>
         </div>

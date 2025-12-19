@@ -2,7 +2,9 @@
 
 namespace App\Infrastructure\ProviderImpl;
 
+use App\Domain\Exception\GenericException;
 use App\Domain\Model\AdresseProcheModel;
+use App\Domain\Model\CoordinateModel;
 use App\Domain\ProviderInterface\AdresseProcheProviderInterface;
 use App\Infrastructure\Mapper\GeoPlatformMapper;
 use App\Infrastructure\Repository\ApiGeoPlatformRepository;
@@ -12,17 +14,28 @@ final readonly class ApiGeoPlatformProvider implements AdresseProcheProviderInte
     public function __construct(
         private ApiGeoPlatformRepository $httpClient,
         private GeoPlatformMapper        $mapper
-    ) {
+    )
+    {
     }
 
     /**
-     * @param float $longitude
-     * @param float $latitude
-     * @return AdresseProcheModel
+     * @param CoordinateModel[] $coordinates
+     * @return AdresseProcheModel[]
      */
-    public function findOne(float $longitude, float $latitude): AdresseProcheModel
+    public function findAll(array $coordinates): array
     {
-        $adresseProche = $this->httpClient->findOne($latitude, $longitude);
-        return $this->mapper->mapperEntityToModel($adresseProche);
+        $result = array();
+        foreach ($coordinates as $coordinate) {
+            try {
+                $adresseProche = $this->httpClient->findOne($coordinate->getLatitude(), $coordinate->getLongitude());
+                $result[] = $this->mapper->mapperEntityToModelWithOrigin($adresseProche, $coordinate);
+                sleep(1);
+            } catch (GenericException) {
+                continue;
+            }
+        }
+
+        return $result;
     }
+
 }

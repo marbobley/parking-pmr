@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Domain\ProviderInterface;
+namespace App\Domain\ServiceInterface;
 
 use App\Domain\Model\AdresseProcheModel;
 use App\Domain\Model\CoordinateModel;
 
-/**
- * Port primaire (interface) pour accéder aux parkings.
- */
-interface AdresseProcheProviderInterface
+interface BulkLoadAdresseProcheInterface
 {
 
     /**
@@ -16,4 +13,10 @@ interface AdresseProcheProviderInterface
      * @return list<AdresseProcheModel>
      */
     public function findAll(array $coordinates): array;
+
+    /**
+     * Load address from an external source and save them in a database
+     * @return int quantity of saved address
+     */
+    public function loadAndSave(): int;
 }

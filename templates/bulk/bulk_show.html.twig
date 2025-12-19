@@ -4,6 +4,11 @@
     <div class="container py-4">
         <h1 class="h3 mb-3">Carte de Montpellier avec toutes les places de parking PMR</h1>
         <div>
+            <ul>
+                {% for adresse in adresseProches %}
+                    <li>{{ adresse.label }}</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

@@ -3,12 +3,19 @@
 namespace App\Infrastructure\Mapper;
 
 use App\Domain\Model\ParkingModel;
-use App\Infrastructure\Model\Parking;
 use App\Infrastructure\Model\Coordinate;
+use App\Infrastructure\Model\Parking;
 use App\Infrastructure\Model\SlotStatus;
+use App\Repository\AdresseProcheOriginRepository;
 
 class ParkingMapper
 {
+    public function __construct(
+        private AdresseProcheOriginRepository $adresseProcheOriginRepository,
+    )
+    {
+    }
+
     public function mapperEntityToModel(Parking $object): ParkingModel
     {
         $id = (string)($object->id ?? '');
@@ -19,7 +26,9 @@ class ParkingMapper
         $lat = $this->extractCoordinateFloat($object->latitude ?? null, 'latitude');
         $lon = $this->extractCoordinateFloat($object->longitude ?? null, 'longitude');
         $parkingPlace = $this->extractNombrePlaceInteger($object->slot ?? null);
-        return new ParkingModel($id, $lat, $lon,$parkingPlace );
+        $adresse = $this->adresseProcheOriginRepository->findOneBy(array('latitude' => $lat, 'longitude' => $lon));
+        $label = is_null($adresse) ? '' : $adresse->getLabel();
+        return new ParkingModel($id, $lat, $lon, $parkingPlace, $label);
     }
 
     /**
@@ -61,9 +70,9 @@ class ParkingMapper
         return $float;
     }
 
-    private function extractNombrePlaceInteger(SlotStatus|null $slot) : int
+    private function extractNombrePlaceInteger(SlotStatus|null $slot): int
     {
-        if($slot === null || $slot->value === null) {
+        if ($slot === null || $slot->value === null) {
             return -1;
         }
         return (int)($slot->value);
