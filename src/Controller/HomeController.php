@@ -22,7 +22,7 @@ final class HomeController extends AbstractController
         $clientIP = $request->getClientIp();
         $browser = $request->headers->get('User-Agent');
         // Incrémente le compteur de visiteurs à chaque affichage de la page d'accueil
-        $visitorCounter->addConnexion($clientIP, $browser, new \DateTimeImmutable());
+        $visitorCounter->saveVisitorConnexion($clientIP, $browser, new \DateTimeImmutable());
         $parkings = $getAllParkings->findAll();
 
         $mapUx = $uxMap->generate($parkings);

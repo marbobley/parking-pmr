@@ -6,5 +6,5 @@ interface VisitorIncrementInterface
 {
     function getCount(): int;
 
-    public function addConnexion(?string $clientIP, ?string $browser, \DateTimeImmutable $date);
+    public function saveVisitorConnexion(?string $clientIP, ?string $browser, \DateTimeImmutable $date);
 }

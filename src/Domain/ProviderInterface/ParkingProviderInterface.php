@@ -10,6 +10,7 @@ use App\Domain\Model\ParkingModel;
 interface ParkingProviderInterface
 {
     /**
+     * Return all parking without any filters
      * @return list<ParkingModel>
      */
     public function findAll(): array;
