@@ -16,25 +16,6 @@
     {% block javascripts %}
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
-    <script>
-        function success(position) {
-            let lat = position.coords.latitude;
-            let lng = position.coords.longitude;
-
-            let path = window.location.href + "localisation?latitude=" + lat + "&longitude=" + lng;
-            window.location.replace(path);
-        }
-
-        function error() {
-            alert("Sorry, no position available.");
-        }
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(this.success, this.error);
-            }
-        }
-    </script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -52,8 +33,15 @@
                        href="{{ path('app_home') }}">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link {{ currentRoute == 'app_home' ? 'active' : '' }}" aria-current="page"
-                            onclick="getLocation()">Me localiser
+                    <button
+                        class="nav-link {{ currentRoute == 'app_home' ? 'active' : '' }}"
+                        aria-current="page"
+                        type="button"
+                        data-controller="geolocation"
+                        data-action="click->geolocation#getLocation"
+                        data-geolocation-url-value="{{ path('app_home_localisation') }}"
+                    >
+                        Me localiser
                     </button>
                 </li>
             </ul>
