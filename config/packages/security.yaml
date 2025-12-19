@@ -54,3 +54,4 @@ when@test:
                 memory:
                     users:
                         admin: { password: password, roles: ROLE_ADMIN }
+                        user: { password: password, roles: ROLE_USER }
