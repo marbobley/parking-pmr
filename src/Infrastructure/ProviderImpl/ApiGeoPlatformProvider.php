@@ -29,7 +29,7 @@ final readonly class ApiGeoPlatformProvider implements AdresseProcheProviderInte
             try {
                 $adresseProche = $this->httpClient->findOne($coordinate->getLatitude(), $coordinate->getLongitude());
                 $result[] = $this->mapper->mapperEntityToModelWithOrigin($adresseProche, $coordinate);
-                sleep(1);
+
             } catch (GenericException) {
                 continue;
             }
