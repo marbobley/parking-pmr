@@ -1269,12 +1269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marbobley/entities-visitor-bundle.git",
-                "reference": "60a52c55741e67b8957cccb709e73f429e49b752"
+                "reference": "8256b268545aec7fab5c5253841fd076de3f88a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marbobley/entities-visitor-bundle/zipball/60a52c55741e67b8957cccb709e73f429e49b752",
-                "reference": "60a52c55741e67b8957cccb709e73f429e49b752",
+                "url": "https://api.github.com/repos/marbobley/entities-visitor-bundle/zipball/8256b268545aec7fab5c5253841fd076de3f88a5",
+                "reference": "8256b268545aec7fab5c5253841fd076de3f88a5",
                 "shasum": ""
             },
             "require": {
@@ -1302,7 +1302,7 @@
                 "issues": "https://github.com/marbobley/entities-visitor-bundle/issues",
                 "source": "https://github.com/marbobley/entities-visitor-bundle/tree/master"
             },
-            "time": "2025-12-30T12:08:31+00:00"
+            "time": "2025-12-30T12:36:55+00:00"
         },
         {
             "name": "monolog/monolog",
