@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="parking-pmr2dev@localhost" uuid="f8b073fc-ad5f-46b3-a744-5c3c6b1dd607">
+    <data-source source="LOCAL" name="parking-pmr3dev@localhost" uuid="f8b073fc-ad5f-46b3-a744-5c3c6b1dd607">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://localhost:3306/parking-pmr2dev</jdbc-url>
+      <jdbc-url>jdbc:mariadb://localhost:3306/parking-pmr3dev</jdbc-url>
       <jdbc-additional-properties>
         <property name="database.introspection.mysql.dbe5060" value="true" />
       </jdbc-additional-properties>
@@ -16,6 +16,16 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mariadb://localhost:3306/depensedev</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="parking-pmr4dev@localhost" uuid="c51436fe-a1e1-4ebc-9906-f0915802dd46">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://localhost:3306/parking-pmr4dev</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.introspection.mysql.dbe5060" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -15,4 +15,5 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\UX\Map\UXMapBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
+    Marbobley\EntitiesVisitorBundle\EntitiesVisitorBundle::class => ['all' => true],
 ];
